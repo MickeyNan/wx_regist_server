@@ -50,22 +50,14 @@ def checkSignatureWX(signature = '',timestamp = '',nonce = '',token = ''):
 class MainHandler(tornado.web.RequestHandler):
 
     def post(self):
-        signature = self.request.arguments['signature'][0]
-        timestamp = self.request.arguments['timestamp'][0]
-        nonce = self.request.arguments['nonce'][0]
-        token = get_token('access_token.json')
-
-        if not checkSignatureWX(signature,timestamp,nonce,token):
-            self.write("Not Regular Request")
-        else:
-            try:
-                msg = receive_msg.parse_xml(self.request.body)
-                fromuser = msg.ToUserName
-                touser = msg.FromUserName
-                xml_message = send_msg.TextMsg(touser,fromuser,'transfer_customer_service').create()
-                self.write(xml_message)
-            except Exception as e:
-                print e
+        try:
+            msg = receive_msg.parse_xml(self.request.body)
+            fromuser = msg.ToUserName
+            touser = msg.FromUserName
+            xml_message = send_msg.TextMsg(touser,fromuser,'transfer_customer_service').create()
+            self.write(xml_message)
+        except Exception as e:
+            print e
 
     def get(self):
         pass
