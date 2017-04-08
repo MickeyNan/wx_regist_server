@@ -18,12 +18,12 @@ class TextMsg(Msg):
 
 	def create(self):
 		XmlForm = """
-		<xml>
-		<ToUserName><![CDATA[{ToUserName}]]></ToUserName>
-		<FromUserName><![CDATA[{FromUserName}]]></FromUserName>
-		<CreateTime>{CreateTime}</CreateTime>
-		<MsgType><![CDATA[{MsgType}]]></MsgType>
-		</xml>
+<xml>
+<ToUserName><![CDATA[{ToUserName}]]></ToUserName>
+<FromUserName><![CDATA[{FromUserName}]]></FromUserName>
+<CreateTime>{CreateTime}</CreateTime>
+<MsgType><![CDATA[{MsgType}]]></MsgType>
+</xml>
 		"""
 		return XmlForm.format(**self.__dict)
 
