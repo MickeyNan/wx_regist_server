@@ -24,7 +24,7 @@ class TextMsg(Msg):
 <CreateTime>{CreateTime}</CreateTime>
 <MsgType><![CDATA[{MsgType}]]></MsgType>
 </xml>
-		"""
+"""
 		return XmlForm.format(**self.__dict)
 
 if __name__ == "__main__":
