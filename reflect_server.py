@@ -50,12 +50,12 @@ def checkSignatureWX(signature = '',timestamp = '',nonce = '',token = ''):
 class MainHandler(tornado.web.RequestHandler):
 
     def post(self):
-	   self.write(self.request.body)
-	   #print self.request.body
-
-       openid = receive_msg.parse_xml(self.request.body)
-       xml_message = send_msg.TextMsg(openid,'wang864889916','transfer_customer_service','')
-       self.write(xml_message)
+        try:
+            openid = receive_msg.parse_xml(self.request.body)
+            xml_message = send_msg.TextMsg(openid,'wang864889916','transfer_customer_service','').create()
+            self.write(xml_message)
+        except Exception as e:
+            print e
 
     def get(self):
         uri = self.request.uri
