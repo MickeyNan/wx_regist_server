@@ -50,39 +50,25 @@ def checkSignatureWX(signature = '',timestamp = '',nonce = '',token = ''):
 class MainHandler(tornado.web.RequestHandler):
 
     def post(self):
-        try:
-            msg = receive_msg.parse_xml(self.request.body)
-            fromuser = msg.ToUserName
-            touser = msg.FromUserName
-            xml_message = send_msg.TextMsg(touser,fromuser,'transfer_customer_service').create()
-            self.write(xml_message)
-        except Exception as e:
-            print e
+        signature = self.request.arguments['signature'][0]
+        timestamp = self.request.arguments['timestamp'][0]
+        nonce = self.request.arguments['nonce'][0]
+        token = get_token('access_token.json')
+
+        if not checkSignatureWX(signature,timestamp,nonce,token):
+            self.write("Not Regular Request")
+        else:
+            try:
+                msg = receive_msg.parse_xml(self.request.body)
+                fromuser = msg.ToUserName
+                touser = msg.FromUserName
+                xml_message = send_msg.TextMsg(touser,fromuser,'transfer_customer_service').create()
+                self.write(xml_message)
+            except Exception as e:
+                print e
 
     def get(self):
-        uri = self.request.uri
-        param_list = uri.split('&')
-        token = get_token('wx_regist_token.txt')
-        for i in range(len(param_list)):
-            #self.write(str(i))
-	    #self.write('/n')
-	    pos = param_list[i].find('=') + 1
-            if (param_list[i].find('signature') >= 0):
-                signature = param_list[i][pos:]
-            if (param_list[i].find('timestamp') >= 0):
-                timestamp = param_list[i][pos:]
-            if (param_list[i].find('nonce') >= 0):
-                nonce = param_list[i][pos:]
-            if (param_list[i].find('echostr') >= 0):
-                echostr = param_list[i][pos:]
-
-	#self.write(echostr)
-	#self.write('   ')
-
-        if (checkSignatureWX(signature,timestamp,nonce,token) == 1):
-            self.write(echostr)
-        else:
-            self.write("It is not from wx")
+        pass
 
 
 
