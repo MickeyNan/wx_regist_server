@@ -1,0 +1,10 @@
+{
+    "button": [
+        {
+            "type": "view", 
+            "name": "进入本店", 
+            "url": "https://shop18963988.youzan.com/v2/showcase/homepage?alias=14cgjf8mt&type=share_shop&share=wxd_frd&from=singlemessage&isappinstalled=1", 
+            "key": "V1001_main_shop"
+        }
+    ]
+}

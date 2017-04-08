@@ -18,9 +18,12 @@ import tornado.options
 import tornado.web
 import hashlib
 from tornado.options import define, options
+from xml.dom import minidom,Node
+import xml.etree.ElementTree as ET
+import receive_msg
+import send_msg
 
 define("port", default=80, help="run on the given port", type=int)
-
 
 def get_token(file_name):
     token = ''
@@ -47,8 +50,12 @@ def checkSignatureWX(signature = '',timestamp = '',nonce = '',token = ''):
 class MainHandler(tornado.web.RequestHandler):
 
     def post(self):
-	self.write(self.request.body)
-	print self.request.body
+	   self.write(self.request.body)
+	   #print self.request.body
+
+       openid = receive_msg.parse_xml(self.request.body)
+       xml_message = send_msg.TextMsg(openid,'wang864889916','transfer_customer_service','')
+       self.write(xml_message)
 
     def get(self):
         uri = self.request.uri
