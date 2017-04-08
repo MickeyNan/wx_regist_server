@@ -30,8 +30,8 @@ def parse_xml(webdata):
 	msg_type = xmlData.find('MsgType').text
 
 	if msg_type == "text":
-		return TextMsg(xmlData).FromUserName
+		return TextMsg(xmlData)
 	if msg_type == "image":
-		return ImageMsg(xmlData).FromUserName
+		return ImageMsg(xmlData)
 
 

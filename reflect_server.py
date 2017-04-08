@@ -51,8 +51,9 @@ class MainHandler(tornado.web.RequestHandler):
 
     def post(self):
         try:
-            touser = receive_msg.parse_xml(self.request.body)
-            fromuser = receive_msg.Msg.ToUserName
+            msg = receive_msg.parse_xml(self.request.body)
+            fromuser = msg.ToUserName
+            touser = msg.FromUserName
             xml_message = send_msg.TextMsg(touser,fromuser,'transfer_customer_service').create()
             self.write(xml_message)
         except Exception as e:
