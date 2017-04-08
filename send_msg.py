@@ -9,13 +9,12 @@ class Msg(object):
 
 
 class TextMsg(Msg):
-	def __init__(self,ToUserName,FromUserName,MsgType,Content):
+	def __init__(self,ToUserName,FromUserName,MsgType):
 		self.__dict = dict()
 		self.__dict['ToUserName'] = ToUserName
 		self.__dict['FromUserName'] = FromUserName
 		self.__dict['CreateTime'] = int(time.time())
 		self.__dict['MsgType'] = MsgType
-		self.__dict['Content'] = Content
 
 	def create(self):
 		XmlForm = """
@@ -24,13 +23,12 @@ class TextMsg(Msg):
 		<FromUserName><![CDATA[{FromUserName}]]></FromUserName>
 		<CreateTime>{CreateTime}</CreateTime>
 		<MsgType><![CDATA[{MsgType}]]></MsgType>
-		<Content><![CDATA[{Content}]]></Content>
 		</xml>
 		"""
 		return XmlForm.format(**self.__dict)
 
 if __name__ == "__main__":
-	text_msg = TextMsg('1','2','3','4')
+	text_msg = TextMsg('1','2','3')
 	print text_msg.create()
 
 
